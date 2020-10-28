@@ -38,7 +38,7 @@ class WeightedPartition(object):
         else:
             self.set_communities(communities)
         self.total_edge_weight = graph.size(weight='weight')
-        self.degrees = graph.degree(weight='weight')
+        self.degrees = dict(graph.degree(weight='weight'))
 
     @property
     def communities(self):
@@ -125,7 +125,7 @@ class WeightedPartition(object):
             list is size of total number of communities"""
         comm = self.communities
         weights = [0] * len(comm)
-        all_degree_weights = self.graph.degree(weight='weight')
+        all_degree_weights = dict(self.graph.degree(weight='weight'))
         for node, weight in all_degree_weights.items():
             node_comm = self.get_node_community(node)
             weights[node_comm] += weight
@@ -329,7 +329,7 @@ class LouvainCommunityDetection(object):
         comm_wo_node = self._communities_without_node(part, removed_node)
         weights = [0] * len(comm_wo_node)
         ## make a list of all nodes degree weights
-        all_degree_weights = list(part.graph.degree(weight='weight').values())
+        all_degree_weights = list(dict(part.graph.degree(weight='weight')).values())
         all_degree_weights = np.array(all_degree_weights)
         for val, nodeset in enumerate(comm_wo_node):
             node_index = np.array(list(nodeset)) #index of nodes in community
@@ -420,7 +420,7 @@ def meta_graph(partition):
     mapping = {val:nodes for val,nodes in enumerate(partition.communities)}
     metagraph.add_nodes_from(newnodes, weight=0.0)
 
-    for node1, node2, data in partition.graph.edges_iter(data=True):
+    for node1, node2, data in partition.graph.edges(data=True):
         node1_community = partition.get_node_community(node1)
         node2_community = partition.get_node_community(node2)
         try:
