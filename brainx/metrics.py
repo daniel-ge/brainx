@@ -88,7 +88,7 @@ def nodal_pathlengths(graph):
 def assert_no_selfloops(graph):
     """Raise an error if the graph graph has any selfloops.
     """
-    if len(list(graph.nodes_with_selfloops())) > 0:
+    if len(list(nx.nodes_with_selfloops(graph))) > 0:
         raise ValueError("input graph can not have selfloops")
 
 
