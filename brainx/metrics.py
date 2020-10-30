@@ -34,7 +34,7 @@ def inter_node_distances(graph):
         Dictionary of shortest path lengths keyed by source and target.
 
     """
-    lengths = nx.all_pairs_shortest_path_length(graph)
+    lengths = dict(nx.all_pairs_shortest_path_length(graph))
     node_labels = sorted(lengths)
     for src in node_labels:
         lengths[src].pop(src)
@@ -88,7 +88,7 @@ def nodal_pathlengths(graph):
 def assert_no_selfloops(graph):
     """Raise an error if the graph graph has any selfloops.
     """
-    if graph.nodes_with_selfloops():
+    if len(list(graph.nodes_with_selfloops())) > 0:
         raise ValueError("input graph can not have selfloops")
 
 
@@ -109,7 +109,7 @@ def path_lengths(graph):
 
     assert_no_selfloops(graph)
     
-    length = nx.all_pairs_shortest_path_length(graph)
+    length = dict(nx.all_pairs_shortest_path_length(graph))
     paths = []
     seen = set()
     for src,targets in length.items():
@@ -144,7 +144,7 @@ def path_lengthsSPARSE(graph):
 
     assert_no_selfloops(graph)
     
-    length = nx.all_pairs_shortest_path_length(graph)
+    length = dict(nx.all_pairs_shortest_path_length(graph))
 
     nnod = graph.number_of_nodes()
     paths_mat = sparse.dok_matrix((nnod,nnod))
@@ -206,7 +206,7 @@ def local_efficiency(graph):
     efficiencies across all nodes with their direct neighbors"""
 
     nodepaths=[]
-    length=nx.all_pairs_shortest_path_length(graph)
+    length=dict(nx.all_pairs_shortest_path_length(graph))
     for n in graph.nodes():
         nneighb= nx.neighbors(graph,n)
         
@@ -239,7 +239,7 @@ def local_efficiency(graph):
     assert_no_selfloops(graph)
 
     nodepaths = []
-    length = nx.all_pairs_shortest_path_length(graph)
+    length = dict(nx.all_pairs_shortest_path_length(graph))
     for n in graph:
         nneighb = set(nx.neighbors(graph,n))
 
