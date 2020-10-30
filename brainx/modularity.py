@@ -26,7 +26,7 @@ import numpy.testing as npt
 import numpy.linalg as nl
 import scipy.linalg as sl
 
-from matplotlib import pyplot as plt
+
 
 # Our own modules
 from . import util
@@ -820,7 +820,7 @@ def plot_partition(g,part,title,fname='figure',nod_labels = None, pos = None,
     within_mod = 'none', part_coeff = 'none',les_dam='none'):
     """This function takes in a graph and a partition and makes a figure that
     has each node labeled according to its partition assignment"""
-
+    from matplotlib import pyplot as plt
 
     write_labels = False
     nnod = g.number_of_nodes()
